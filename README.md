@@ -41,8 +41,8 @@ See `attributes/default.rb` for default values.
 * `node[:sumologic][:collector][:checksum]` - The md5sum of the tarball.
 * `node[:sumologic][:admin][:email]` - The email of an admin user that will
   be invoked to perform unattended installs of collectors.  See Sumo's article
-  https://service.sumologic.com/ui/help/Unattended\_Installation.htm for more
-  info.
+  for more info:
+    https://service.sumologic.com/ui/help/Unattended_Installation.htm
 * `node[:sumologic][:admin][:pass]` = The password for the admin's email above.
 * `node[:sumologic][:sources][:default_category]` = You can specify a category
   for any of your resources through the sumo\_source definition (see below), but
@@ -64,8 +64,8 @@ provided to create them.  Example:
 
     sumo_source 'syslog' do
         path '/var/log/syslog'
-	category 'syslog'  # optional, defaults to 'log' or the category attr.
-	default_timezone 'UTC'  # optional, defaults to UTC or timezone attr.
+        category 'syslog'  # optional, defaults to 'log' or the category attr.
+        default_timezone 'UTC'  # optional, defaults to UTC or timezone attr.
         force_timezone true # optional, defaults to false or the force attr.
     end
 
