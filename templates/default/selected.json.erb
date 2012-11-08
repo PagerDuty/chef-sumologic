@@ -1,0 +1,8 @@
+{
+  "sumo.config" : {
+    "hostName" : ""
+  },
+  "sumo.blades" : [
+<%= node.run_state[:sumo_output].join(",\n") %>
+  ]
+}
