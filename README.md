@@ -36,6 +36,8 @@ See `attributes/default.rb` for default values.
 * `node[:sumologic][:collector][:url]` - The non-tarball part of the URL you're
   downloading the collector from (if the full url is http://path/to/s.tar.gz,
    this is the http://path/to part).
+* `node[:sumologic][:collector][:version]` - The version of the collector you
+  want to install.
 * `node[:sumologic][:collector][:tarball]` - The name of the tarball you're
   downloading, so the s.tar.gz in the above example.
 * `node[:sumologic][:collector][:checksum]` - The md5sum of the tarball.
@@ -81,6 +83,10 @@ Changes
 
 * Broken off of PagerDuty's internal chef repo and releaased to the world with
   sane defaults.
+
+## v0.0.3
+
+* Fixed upgrades to a newer sumocollector version.
 
 License and Author
 ==================

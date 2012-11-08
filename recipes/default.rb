@@ -37,6 +37,8 @@ remote_file c do
   notifies :run, 'bash[extract_sumologic]', :immediately
 end
 
+collectorbin = '/etc/init.d/collector'
+
 bash 'extract_sumologic' do
   def wrapperdir
     if node[:os] == 'linux'
@@ -58,6 +60,7 @@ bash 'extract_sumologic' do
   user 'root'
   cwd node[:sumologic][:rootdir]
   code <<-EOH
+    [ -x "#{collectorbin}" ] && "#{collectorbin}" stop
     tar zxf #{node[:sumologic][:collector][:tarball]}
     chmod 755 sumocollector/collector
     cp sumocollector/tanuki/#{wrapperdir}/wrapper sumocollector
@@ -75,7 +78,7 @@ end
 bash 'install collector into /etc/*.d' do
   user 'root'
   code "#{node[:sumologic][:rootdir]}/sumocollector/collector install"
-  not_if { File.exists?('/etc/init.d/collector') }
+  not_if { File.exists?(collectorbin) }
 end
 
 # Note:  we could do everything this resource does inside the .erb file, but
@@ -123,6 +126,7 @@ template "#{node[:sumologic][:rootdir]}/sumocollector/config/wrapper.conf" do
   mode 0664
   variables(
     :java_location => '/usr/bin/java',
+    :sumover => node[:sumologic][:collector][:version],
     :sumo_email => node[:sumologic][:admin][:email],
     :sumo_pass => node[:sumologic][:admin][:pass],
     :selectedjson => p
