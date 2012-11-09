@@ -82,7 +82,7 @@ Changes
 
 ## v0.0.2
 
-* Broken off of PagerDuty's internal chef repo and releaased to the world with
+* Broken off of PagerDuty's internal chef repo and released to the world with
   sane defaults.
 
 ## v0.0.3
