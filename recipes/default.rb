@@ -120,9 +120,9 @@ end
 # Had to steal this from inside the tar file because it's awful to modify.
 # Converted to template.
 template "#{node[:sumologic][:rootdir]}/sumocollector/config/wrapper.conf" do
-  source "wrapper.conf.erb"
+  source 'wrapper.conf.erb'
   backup false
-  mode 0664
+  mode 0644
   variables(
     :java_location => '/usr/bin/java',
     :sumover => node[:sumologic][:collector][:version],
