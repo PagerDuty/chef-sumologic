@@ -89,6 +89,17 @@ Changes
 
 * Fixed upgrades to a newer sumocollector version.
 
+## v0.0.4
+
+* Various cleanups re: string quoting.
+* Workaround (-c) for Sumo Logic being incapable of reconfiguring sources
+  correctly.  The workaround is only moderately less idiotic than that, as it
+  requires a logrotate invocation to work properly.
+* Fix for collector not restarting if you haven't modified sources in between
+  the last time the collector was disabled and now.
+* Stop forcing a particular URL to work; users can now use whatever URL they
+  please to store their Sumo tarballs.
+
 License and Author
 ==================
 
