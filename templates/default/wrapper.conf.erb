@@ -83,7 +83,7 @@ wrapper.app.parameter.6=-p
 wrapper.app.parameter.7=<%= @sumo_pass %>
 <%# Can't pass this evaluated; it would get evaluated before it ever got set %>
 <% if @selectedjson.updated_by_last_action? %>
-wrapper.app.parameter.8=-o
+wrapper.app.parameter.8=-c
 <% end %>
 
 #********************************************************************

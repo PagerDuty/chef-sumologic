@@ -117,6 +117,12 @@ p = template selectedjson do
   end
 end
 
+file "#{node[:sumologic][:rootdir]}/sumocollector/config/creds/main.properties" do
+  backup false
+  action :nothing
+  subscribes :delete, "template[#{selectedjson}]", :immediately
+end
+
 # Had to steal this from inside the tar file because it's awful to modify.
 # Converted to template.
 template "#{node[:sumologic][:rootdir]}/sumocollector/config/wrapper.conf" do
@@ -131,6 +137,25 @@ template "#{node[:sumologic][:rootdir]}/sumocollector/config/wrapper.conf" do
     :selectedjson => p
   )
   notifies :restart, 'service[collector]' if !node[:sumologic][:disabled]
+end
+
+sumobin = "#{node[:sumologic][:rootdir]}/sumocollector/bin"
+directory sumobin do
+  mode 0755
+end
+
+# This is a horrible hack because Sumo Logic can't reconfigure its sources
+# properly without reuploading a bunch of already-uploaded data.  To prevent
+# that, we run logrotate (this hurts me so much I can't even describe it, I
+# hope they get their shit straight, soon).  --lkosewsk, 30.11.2012.
+sumorestart = "#{sumobin}/restart.sh"
+template sumorestart do
+  source 'restart.sh.erb'
+  backup false
+  mode 0755
+  variables(
+    :selectedjson => p
+  )
 end
 
 file "#{node[:sumologic][:rootdir]}/sumocollector/config/state" do
