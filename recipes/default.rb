@@ -133,8 +133,17 @@ template "#{node[:sumologic][:rootdir]}/sumocollector/config/wrapper.conf" do
   notifies :restart, 'service[collector]' if !node[:sumologic][:disabled]
 end
 
+file "#{node[:sumologic][:rootdir]}/sumocollector/config/state" do
+  s = node[:sumologic][:disabled] ? :stop : :restart
+  backup false
+  mode 0644
+  content s.to_s
+  notifies s, 'service[collector]'
+end
+
 service 'collector' do
-  action node[:sumologic][:disabled] ? :stop : :nothing
+  action :nothing
   supports [:start, :stop, :status, :restart, :install, :remove, :dump,
             :console, :condrestart]
+  restart_command sumorestart
 end
