@@ -120,7 +120,7 @@ end
 file "#{node[:sumologic][:rootdir]}/sumocollector/config/creds/main.properties" do
   backup false
   action :nothing
-  subscribes :delete, "template[#{selectedjson}]", :immediately
+  subscribes :delete, resources(:template => selectedjson), :immediately
 end
 
 # Had to steal this from inside the tar file because it's awful to modify.
