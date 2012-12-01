@@ -32,8 +32,7 @@ remote_file c do
   group 'root'
   mode 0644
   checksum node[:sumologic][:collector][:checksum]
-  source "#{node[:sumologic][:collector][:url]}/" +
-           node[:sumologic][:collector][:tarball]
+  source node[:sumologic][:collector][:url]
   notifies :run, 'bash[extract_sumologic]', :immediately
 end
 

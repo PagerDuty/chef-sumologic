@@ -24,18 +24,21 @@ default[:sumologic][:rootdir] = '/opt/sumologic'
 # Set to true to disable the collector on this node
 default[:sumologic][:disabled] = false
 
-# The base of the URL where your tarball is stored
-default[:sumologic][:collector][:url] = 'http://path/to'
 # The sumocollector version you're installing
-sumover = '19.17-15'
+sumover = '19.19-4'
 default[:sumologic][:collector][:version] = sumover
+
 # The sumocollector tarball you wish to install.  You probably don't want to
 # change this; just grab and host the appropriate tarball corresponding to
-# its name
-default[:sumologic][:collector][:tarball] = # SumoCollector_unix_19_15-7.tar.gz
-  "SumoCollector_unix_#{sumover.gsub('.', '_')}.tar.gz"
+# its name.  But be careful since Sumo Logic drops ".tar" on occasion for no
+# reason, turning various releases into just ".gz."
+tarball = "SumoCollector_unix_#{sumover.gsub('.', '_')}.gz"
+default[:sumologic][:collector][:tarball] = tarball
 # The checksum for that tarball
-default[:sumologic][:collector][:checksum] = 'd14a7f5b5ce2baf4e88d1e3c9996e8c6'
+default[:sumologic][:collector][:checksum] = '4fc2d235f5912f2bcb903f81bd7acd20'
+
+# The URL where your tarball is stored
+default[:sumologic][:collector][:url] = "http://path/to/#{tarball}"
 
 # Admin credentials for Sumo Logic account
 default[:sumologic][:admin][:email] = 'user@example.com'
