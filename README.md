@@ -34,14 +34,13 @@ See `attributes/default.rb` for default values.
   'sumocollector'.
 * `node[:sumologic][:disabled]` - Set this if you need to disable the collector
   on this node for some reason.
-* `node[:sumologic][:collector][:url]` - The non-tarball part of the URL you're
-  downloading the collector from (if the full url is http://path/to/s.tar.gz,
-   this is the http://path/to part).
 * `node[:sumologic][:collector][:version]` - The version of the collector you
   want to install.
 * `node[:sumologic][:collector][:tarball]` - The name of the tarball you're
   downloading, so the s.tar.gz in the above example.
 * `node[:sumologic][:collector][:checksum]` - The md5sum of the tarball.
+* `node[:sumologic][:collector][:url]` - The full URL you're downloading the
+  collector from.
 * `node[:sumologic][:admin][:email]` - The email of an admin user that will
   be invoked to perform unattended installs of collectors.  See Sumo's article
   for more info:
