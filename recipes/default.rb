@@ -85,6 +85,7 @@ end
 # sumo_source ran at compile time, because you ran the definition, didn't you?
 ruby_block 'compile_sumo_sources' do
   block do
+    node.run_state[:sumo_output] = []
     node.run_state[:sumo_output] =
       # Stupid hacky .to_s because Ruby 1.8 can't <=> symbols.
       node.run_state[:sumo_source].sort_by{ |k,v| k.to_s }.map do |k, v|
@@ -100,7 +101,7 @@ ruby_block 'compile_sumo_sources' do
       "category" : "#{v[:category]}"
     }
         EOS
-      end
+      end if node.run_state[:sumo_source]
   end
 end
 
