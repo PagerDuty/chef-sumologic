@@ -155,6 +155,9 @@ template sumorestart do
   backup false
   mode 0755
   variables(
+    :start_cmd => node[:sumologic][:start_cmd],
+    :stop_cmd => node[:sumologic][:stop_cmd],
+    :restart_cmd => node[:sumologic][:restart_cmd],
     :selectedjson => p
   )
 end
