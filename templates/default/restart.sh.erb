@@ -1,14 +1,16 @@
 #!/bin/sh -e
 
-SUMO=/etc/init.d/collector
+SUMO_START="<%= @start_cmd %>"
+SUMO_STOP="<%= @stop_cmd %>"
+SUMO_RESTART="<%= @restart_cmd %>"
 
 <% if @selectedjson.updated_by_last_action? %>
-$SUMO stop
+$SUMO_STOP
 LOGROTATE=$(which logrotate)
 if [ "$LOGROTATE" ]; then
   $LOGROTATE -f /etc/logrotate.conf
 fi
-exec $SUMO start
+exec $SUMO_START
 <% else %>
-exec $SUMO restart
+exec $SUMO_RESTART
 <% end %>
