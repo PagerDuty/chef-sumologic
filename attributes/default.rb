@@ -25,7 +25,7 @@ default[:sumologic][:rootdir] = '/opt/sumologic'
 default[:sumologic][:disabled] = false
 
 # The sumocollector version you're installing
-sumover = '19.19-4'
+sumover = '19.38-9'
 default[:sumologic][:collector][:version] = sumover
 
 # The sumocollector tarball you wish to install.  You probably don't want to
@@ -35,7 +35,7 @@ default[:sumologic][:collector][:version] = sumover
 tarball = "SumoCollector_unix_#{sumover.gsub('.', '_')}.gz"
 default[:sumologic][:collector][:tarball] = tarball
 # The checksum for that tarball
-default[:sumologic][:collector][:checksum] = '4fc2d235f5912f2bcb903f81bd7acd20'
+default[:sumologic][:collector][:checksum] = 'a5a7d841265bb2dd7203fa81109b60a5994bdf187c7e6731ec8421d23f599b61'
 
 # The URL where your tarball is stored
 default[:sumologic][:collector][:url] = "http://path/to/#{tarball}"
