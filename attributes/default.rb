@@ -21,6 +21,11 @@
 # default sumocollector attributes
 default[:sumologic][:rootdir] = '/opt/sumologic'
 
+# Sumologic control commands
+default[:sumologic][:start_cmd] = '/etc/init.d/collector start'
+default[:sumologic][:stop_cmd] = '/etc/init.d/collector stop'
+default[:sumologic][:restart_cmd] = '/etc/init.d/collector restart'
+
 # Set to true to disable the collector on this node
 default[:sumologic][:disabled] = false
 
