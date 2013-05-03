@@ -21,7 +21,7 @@ platforms:
     box_url: http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.3_chef-11.2.0.box
     require_chef_omnibus: 11.4.0
   run_list:
-  - recipe[yum::epel]
+  - recipe[java]
 - name: centos-5.8
   driver_config:
     box: opscode-centos-5.8
