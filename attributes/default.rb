@@ -1,4 +1,5 @@
-#
+# 
+# Author:: Ranjib Dey    (<ranjib@pagerduty.com>)
 # Author:: Luke Kosewski (<luke@pagerduty.com>)
 # Cookbook Name:: sumologic
 # Attributes:: default
@@ -30,7 +31,7 @@ default[:sumologic][:restart_cmd] = '/etc/init.d/collector restart'
 default[:sumologic][:disabled] = false
 
 # The sumocollector version you're installing
-sumover = '19.38-9'
+sumover = '19.40-8'
 default[:sumologic][:collector][:version] = sumover
 
 # The sumocollector tarball you wish to install.  You probably don't want to
@@ -40,10 +41,10 @@ default[:sumologic][:collector][:version] = sumover
 tarball = "SumoCollector_unix_#{sumover.gsub('.', '_')}.gz"
 default[:sumologic][:collector][:tarball] = tarball
 # The checksum for that tarball
-default[:sumologic][:collector][:checksum] = 'a5a7d841265bb2dd7203fa81109b60a5994bdf187c7e6731ec8421d23f599b61'
+default[:sumologic][:collector][:checksum] = "37b4167160f64390af6a0f52d1cd38fe957464b8df36520e485e53103fe4a206"
 
 # The URL where your tarball is stored
-default[:sumologic][:collector][:url] = "http://path/to/#{tarball}"
+default[:sumologic][:collector][:url] = "https://collectors.sumologic.com/rest/download/tar"
 
 # Admin credentials for Sumo Logic account
 default[:sumologic][:admin][:email] = 'user@example.com'
