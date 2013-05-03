@@ -1,3 +1,4 @@
+name             'sumologic'
 maintainer       'PagerDuty, Inc.'
 maintainer_email 'luke@pagerduty.com'
 license          'Apache 2.0'
