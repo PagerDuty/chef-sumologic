@@ -43,7 +43,7 @@ class Sumologic
       if parse_json
         JSON.parse(response.body)
       else
-        response.body
+        response
       end
     end
 
@@ -101,10 +101,18 @@ class Sumologic
     def update_source!(source_id, source_data)
       u = URI.parse("https://api.sumologic.com/api/v1/collectors/#{id}/sources/#{source_id}")
       request = Net::HTTP::Put.new(u.request_uri)
-      request.body = JSON.dump({source: source_data})
+      request.body = JSON.dump({source: source_data.merge(id: source_id)})
       request.content_type = 'application/json'
+      request['If-Match'] = get_etag(source_id)
       response = api_request(uri: u, request: request, parse_json: false)
       response
+    end
+
+    def get_etag(source_id)
+      u = URI.parse("https://api.sumologic.com/api/v1/collectors/#{id}/sources/#{source_id}")
+      request = Net::HTTP::Get.new(u.request_uri)
+      response = api_request(uri: u, request: request, parse_json: false)
+      response['etag']
     end
   end
 end
