@@ -23,11 +23,11 @@ class Chef
         set_or_return(:path, arg, :kind_of => String)
       end
 
-      def category(arg=node['sumologic']['sources']['default_category'])
+      def category(arg=nil)
         set_or_return(:default_timezone, arg, :kind_of => String)
       end
 
-      def default_timezone(arg= node['sumologic']['sources']['default_timezone'])
+      def default_timezone(arg=nil)
         set_or_return(:default_timezone, arg, :kind_of => String)
       end
 
