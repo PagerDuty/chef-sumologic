@@ -1,3 +1,6 @@
 .*.sw?
 .sw?
 *.un~
+*.json
+vendor
+*.lock
