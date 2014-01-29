@@ -24,7 +24,7 @@ class Chef
       end
 
       def category(arg=nil)
-        set_or_return(:default_timezone, arg, :kind_of => String)
+        set_or_return(:category, arg, :kind_of => String)
       end
 
       def default_timezone(arg=nil)
