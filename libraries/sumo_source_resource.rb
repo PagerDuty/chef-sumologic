@@ -13,6 +13,8 @@ class Chef
         @resource_name = :sumo_source
         @action = :create
         @allowed_actions.push(:create, :delete)
+        @api_username = nil
+        @api_password = nil
         @path = nil
         @default_timezone = nil
         @force_timezone = false
@@ -22,6 +24,14 @@ class Chef
         @use_autoline_matching = true
         @manual_prefix_regexp = nil
         @default_date_format = nil
+      end
+
+      def api_username(arg=nil)
+        set_or_return(:api_username, arg, :kind_of => String)
+      end
+
+      def api_password(arg=nil)
+        set_or_return(:api_password, arg, :kind_of => String)
       end
 
       def path(arg=nil)
