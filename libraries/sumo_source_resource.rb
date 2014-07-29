@@ -13,10 +13,15 @@ class Chef
         @resource_name = :sumo_source
         @action = :create
         @allowed_actions.push(:create, :delete)
-        @path =nil
+        @path = nil
         @default_timezone = nil
-        @force_timezone = nil
+        @force_timezone = false
         @category = nil
+        @automatic_date_parsing = true
+        @multiline_processing_enabled = true
+        @use_autoline_matching = true
+        @manual_prefix_regexp = nil
+        @default_date_format = nil
       end
 
       def path(arg=nil)
@@ -31,14 +36,37 @@ class Chef
         set_or_return(:default_timezone, arg, :kind_of => String)
       end
 
-      def force_timezone(arg=false)
+      def force_timezone(arg=nil)
         set_or_return(:force_timezone, arg, :kind_of => [TrueClass, FalseClass])
+      end
+
+      def automatic_date_parsing(arg=nil)
+        set_or_return(:automatic_date_parsing, arg, :kind_of => [TrueClass, FalseClass])
+      end
+
+      def multiline_processing_enabled(arg=nil)
+        set_or_return(:multiline_processing_enabled, arg, :kind_of => [TrueClass, FalseClass])
+      end
+
+      def use_autoline_matching(arg=nil)
+        set_or_return(:use_autoline_matching, arg, :kind_of => [TrueClass, FalseClass])
+      end
+
+      def manual_prefix_regexp(arg=nil)
+        set_or_return(:manual_prefix_regexp, arg, :kind_of => String)
+      end
+
+      def default_date_format(arg=nil)
+        set_or_return(:default_date_format, arg, :kind_of => String)
       end
 
       def to_sumo_hash
         { type: 'localWildCard', name: name, timeZone: default_timezone,
         forceTimeZone: force_timezone, pathExpression: path, category: category,
-        sourceType: 'LocalFile'
+        sourceType: 'LocalFile', automaticDateParsing: automatic_date_parsing,
+        multilineProcessingEnabled: multiline_processing_enabled,
+        useAutolineMatching: use_autoline_matching, manualPrefixRegexp: manual_prefix_regexp,
+        defaultDateFormat: default_date_format 
         }
       end
     end
