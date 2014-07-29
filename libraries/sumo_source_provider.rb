@@ -27,12 +27,22 @@ class Chef
         @current_resource.category(@new_resource.category)
         @current_resource.default_timezone(@new_resource.default_timezone)
         @current_resource.force_timezone(@new_resource.force_timezone)
+        @current_resource.automatic_date_parsing(@new_resource.automatic_date_parsing)
+        @current_resource.multiline_processing_enabled(@new_resource.multiline_processing_enabled)
+        @current_resource.use_autoline_matching(@new_resource.use_autoline_matching)
+        @current_resource.manual_prefix_regexp(@new_resource.manual_prefix_regexp)
+        @current_resource.default_date_format(@new_resource.default_date_format)
         if @@collector.source_exist?(@new_resource.name) && (!node['sumologic']['disabled'])
           resource_hash = @@collector.source(@new_resource.name)
           @current_resource.path(resource_hash['pathExpression'])
           @current_resource.default_timezone(resource_hash['timeZone'])
           @current_resource.force_timezone(resource_hash['forceTimeZone'])
           @current_resource.category(resource_hash['category'])
+          @current_resource.automatic_date_parsing(resource_hash['automaticDateParsing'])
+          @current_resource.multiline_processing_enabled(resource_hash['multilineProcessingEnabled'])
+          @current_resource.use_autoline_matching(resource_hash['useAutolineMatching'])
+          @current_resource.manual_prefix_regexp(resource_hash['manualPrefixRegexp'])
+          @current_resource.default_date_format(resource_hash['defaultDateFormat'])
         end
         @current_resource
       end
