@@ -59,7 +59,7 @@ See `attributes/default.rb` for default values.
 * `node[:sumologic][:credentials][:bag_name]` - Set if you want to pull username
   and password from a databag
 * `node[:sumologic][:credentials][:item_name]` - See bag_name above
-* `node[:sumologic][:credentials][:secret_file]` - encryted data bag secret file 
+* `node[:sumologic][:credentials][:secret_file]` - encrypted data bag secret file 
 
 
 Usage
@@ -110,7 +110,7 @@ Changes
 
 ## v1.0.0
 
-* Relase on github
+* Release on github
 
 ## v1.1.0
 
