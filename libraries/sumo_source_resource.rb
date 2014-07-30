@@ -13,8 +13,6 @@ class Chef
         @resource_name = :sumo_source
         @action = :create
         @allowed_actions.push(:create, :delete)
-        @api_username = nil
-        @api_password = nil
         @path = nil
         @default_timezone = nil
         @force_timezone = false
