@@ -16,9 +16,11 @@ class Chef
 
       def load_current_resource
         unless node[:sumologic][:disabled]
-          @@collector ||= Sumologic::Collector.new(name: node.name,
-                api_username: @new_resource.api_username || node[:sumologic][:userID],
-                api_password: @new_resource.api_password || node[:sumologic][:password]
+        databag_secret = Chef::EncryptedDataBagItem.load_secret(node[:sumologic][:credentials][:secret_file])
+        databag_creds = Chef::EncryptedDataBagItem.load(node[:sumologic][:credentials][:bag_name], node[:sumologic][:credentials][:item_name], databag_secret)
+        @@collector ||= Sumologic::Collector.new(name: node.name,
+                api_username: databag_creds['userID'] || node[:sumologic][:userID],
+                api_password: databag_creds['password'] || node[:sumologic][:password]
                 )
 
           @current_resource = Chef::Resource::SumoSource.new(@new_resource.name)
