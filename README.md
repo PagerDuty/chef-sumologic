@@ -56,6 +56,11 @@ See `attributes/default.rb` for default values.
 * `node[:sumologic][:sources][:force_timezone]` - Set to *true* to force any
   timestamps parsed out of log files to this timezone, regardless of any
   timezone information they may carry.
+* `node[:sumologic][:credentials][:bag_name]` - Set if you want to pull username
+  and password from a databag
+* `node[:sumologic][:credentials][:item_name]` - See bag_name above
+* `node[:sumologic][:credentials][:secret_file]` - encrypted data bag secret file 
+
 
 Usage
 =====
@@ -75,6 +80,10 @@ You may include this definition in any recipe; it will "do the right thing" and
 configure all of your sources before restarting sumologic.  It will also
 correctly set the '-o' sumocollector parameter for a sumo restart to force the
 web interface to accept changes to your sources.
+
+
+In order to store your credentials in an encrypted data bag, make sure you add
+the 'userID' and the 'password' objects to the data bag.
 
 Changes
 =======
@@ -98,6 +107,15 @@ Changes
   the last time the collector was disabled and now.
 * Stop forcing a particular URL to work; users can now use whatever URL they
   please to store their Sumo tarballs.
+
+## v1.0.0
+
+* Release on github
+
+## v1.1.0
+
+* Add support for encrypted data bags
+* Add additional SumoLogic API log attribute to the HWRP
 
 License and Author
 ==================
