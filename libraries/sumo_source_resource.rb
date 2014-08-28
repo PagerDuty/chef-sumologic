@@ -10,13 +10,14 @@ class Chef
         if name !~ /^[a-z][A-Za-z0-9_-]*$/
           raise Chef::Exceptions::ValidationFailed, "Sumo source #{name} doesn't match ^[a-z][A-Za-z0-9_-]*$!"
         end
+        source_attrs = node_source_attributes(run_context)
         @resource_name = :sumo_source
         @action = :create
         @allowed_actions.push(:create, :delete)
         @path = nil
-        @default_timezone = nil
-        @force_timezone = false
-        @category = nil
+        @default_timezone = source_attrs['default_timezone'] || nil
+        @force_timezone = source_attrs['force_timezone'] || nil
+        @category = source_attrs['default_category'] || nil
         @automatic_date_parsing = true
         @multiline_processing_enabled = true
         @use_autoline_matching = true
@@ -76,6 +77,14 @@ class Chef
         useAutolineMatching: use_autoline_matching, manualPrefixRegexp: manual_prefix_regexp,
         defaultDateFormat: default_date_format 
         }
+      end
+
+      def node_source_attributes(run_context)
+        if run_context && run_context.node
+          sumo_node_attrs = run_context.node[:sumologic][:sources]
+        else
+          sumo_node_attrs = {}
+        end
       end
     end
   end
