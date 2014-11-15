@@ -1,0 +1,17 @@
+branches:
+  only:
+    - master
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.1.3
+bundler_args: --binstubs --retry=5 --path=.bundle
+cache:
+  directories:
+    - .bundle
+before_script:
+  - /bin/echo '--color' > .rspec
+env:
+  - TEST_SUITE=spec
+  - TEST_SUITE=linters
+script: bundle exec rake $TEST_SUITE
