@@ -105,9 +105,9 @@ Changes
 License and Author
 ==================
 
-Author:: Grant Ridder (<grant@pagerduty.com>)
-Author:: Ranjib Dey (<ranjib@pagerduty.com>)
-Author:: Luke Kosewski (<luke@pagerduty.com>)
+* Author:: Grant Ridder (<grant@pagerduty.com>)
+* Author:: Ranjib Dey (<ranjib@pagerduty.com>)
+* Author:: Luke Kosewski (<luke@pagerduty.com>)
 
 Copyright:  2014, PagerDuty, Inc.
 
