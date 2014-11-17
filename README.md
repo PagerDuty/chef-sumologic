@@ -6,6 +6,8 @@ configure the sources to send up; works on Linux x86 and x86-64.  Sets up a
 fully unattended installation and gets all your sources pushed up without you
 manually activating or pushing any buttons.
 
+[![Build Status](https://travis-ci.org/PagerDuty/chef-sumologic.svg)](https://travis-ci.org/PagerDuty/chef-sumologic)
+
 Requirements
 ============
 
@@ -21,8 +23,9 @@ Platform
 --------
 
 * Tested on Ubuntu 10.04, both x86 and x86-64.
+* Tested on Ubuntu 14.04, x86-64.
 * Will need extra work to run in Windows, Solaris.
-* Tested under Chef 0.10.8, Chef 10.12.0, and Chef 10.14.\*, in Ruby 1.8 & 1.9.
+* Tested under Chef 0.10.8, Chef 10.12.0, and Chef 10.14.\*, in Ruby 1.9 and 2.1.3.
 
 Attributes
 ==========
@@ -102,9 +105,11 @@ Changes
 License and Author
 ==================
 
-Author:: Luke Kosewski (<luke@pagerduty.com>)
+* Author:: Grant Ridder (<grant@pagerduty.com>)
+* Author:: Ranjib Dey (<ranjib@pagerduty.com>)
+* Author:: Luke Kosewski (<luke@pagerduty.com>)
 
-Copyright:  2012, PagerDuty, Inc.
+Copyright:  2014, PagerDuty, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
