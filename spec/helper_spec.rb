@@ -3,6 +3,27 @@ $LOAD_PATH.unshift(File.expand_path('../../libraries', __FILE__))
 require 'helper'
 require 'webmock/rspec'
 
+describe Sumologic do
+
+  let(:test) do
+    Sumologic.collector_exists?('pd', 'u', 'p')
+  end
+
+  let(:collector_data) do
+    { collectors: [{ name: :pd, id: 1 }] }
+  end
+
+  let(:auth_url) do
+    'https://u:p@api.sumologic.com/api/v1'
+  end
+
+  it '#self.collector_exists?' do
+    stub_request(:get, auth_url + '/collectors').to_return(body: JSON.dump(collector_data))
+    expect(test).to eq(true)
+  end
+
+end
+
 describe Sumologic::Collector do
 
   let(:collector) do
