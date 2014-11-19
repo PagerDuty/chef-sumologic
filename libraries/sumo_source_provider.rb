@@ -18,7 +18,8 @@ class Chef
         @@collector ||= Sumologic::Collector.new(
           name: node.name,
           api_username: node['sumologic']['userID'],
-          api_password: node['sumologic']['password']
+          api_password: node['sumologic']['password'],
+          api_timeout: node['sumologic']['api_timeout']
         )
 
         @current_resource = Chef::Resource::SumoSource.new(@new_resource.name)
@@ -43,7 +44,7 @@ class Chef
           if @@collector.source_exist?(new_resource.name)
             if sumo_source_different?
               converge_by("replace #{new_resource.name} via api\n" + convergence_description) do
-                @@collector.update_source!(@@collector.source(new_resource.name)['id'], new_resource.to_sumo_hash)
+                @@collector.update_source!(@@collector.source(new_resource.name)['id'], new_resource.to_sumo_hash, node['sumologic']['api_timeout'])
                 @@collector.refresh!
               end
               @new_resource.updated_by_last_action(true)
@@ -51,7 +52,7 @@ class Chef
             end
           else
             converge_by("add #{new_resource.name} via sumologic api\n" + new_resource.to_sumo_hash.to_s)  do
-              @@collector.add_source!(new_resource.to_sumo_hash)
+              @@collector.add_source!(new_resource.to_sumo_hash, node['sumologic']['api_timeout'])
               @@collector.refresh!
             end
             @new_resource.updated_by_last_action(true)

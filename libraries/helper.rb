@@ -4,22 +4,24 @@ require 'json'
 class Sumologic
   class ApiError < RuntimeError; end
 
-  def self.collector_exists?(node_name, email, pass)
+  def self.collector_exists?(node_name, email, pass, api_timeout = nil)
     collector = Sumologic::Collector.new(
       name: node_name,
       api_username: email,
-      api_password: pass
+      api_password: pass,
+      api_timeout: api_timeout
     )
     collector.exist?
   end
 
   class Collector
-    attr_reader :name, :api_username, :api_password
+    attr_reader :name, :api_username, :api_password, :api_timeout
 
     def initialize(opts = {})
       @name = opts[:name]
       @api_username = opts[:api_username]
       @api_password = opts[:api_password]
+      @api_timeout = opts.fetch(:api_timeout, nil)
     end
 
     def api_endpoint
@@ -39,20 +41,23 @@ class Sumologic
     end
 
     def api_request(options = {})
-      uri = options[:uri]
-      request = options[:request]
-      parse_json = if options.has_key?(:parse_json)
-                     options[:parse_json]
-                   else
-                     true
-                   end
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      request.basic_auth(api_username, api_password)
-      response = http.request(request)
-      raise ApiError, "Unable to get source list #{response.inspect}" unless response.is_a?(Net::HTTPSuccess)
+      response = nil
+      parse_json = options.key?(:parse_json) ? options[:parse_json] : true
+      if !api_timeout.nil?
+        response = api_request_timeout(options)
+      else
+        response = api_request_http_call(options)
+      end
+
       if parse_json
-        JSON.parse(response.body)
+        begin
+          JSON.parse(response.body)
+        rescue JSON::ParserError => e
+          Chef::Log.warn('Sumlogic sent something that does not appear to be JSON, here it is...')
+          Chef::Log.warn("status code: #{response.code}")
+          Chef::Log.warn(response.body)
+          raise e
+        end
       else
         response
       end
@@ -124,6 +129,35 @@ class Sumologic
       request = Net::HTTP::Get.new(u.request_uri)
       response = api_request(uri: u, request: request, parse_json: false)
       response['etag']
+    end
+
+    private
+
+    def api_request_http_call(options = {})
+      uri = options[:uri]
+      request = options[:request]
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      request.basic_auth(api_username, api_password)
+      response = http.request(request)
+      raise ApiError, "Unable to get source list #{response.inspect}" unless response.is_a?(Net::HTTPSuccess)
+      response
+    end
+
+    def api_request_timeout(options = {})
+      response = nil
+      Timeout.timeout(options[:api_timeout]) do
+        sleep_to = 0
+        begin
+          response = api_request_http_call(options)
+        rescue Errno::ETIMEDOUT
+          Chef::Log.warn("Sumologic api timedout... retrying in #{sleep_to}s")
+          sleep sleep_to
+          sleep_to += 10
+          retry
+        end
+      end
+      response
     end
   end
 end
