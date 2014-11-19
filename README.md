@@ -79,6 +79,18 @@ configure all of your sources before restarting sumologic.  It will also
 correctly set the '-o' sumocollector parameter for a sumo restart to force the
 web interface to accept changes to your sources.
 
+Helper Functions
+==============
+
+Sumologic.collector_exists?(node_name, email, pass)
+---------------------------------------------------
+
+This checks whether or not a collector with the given name exists.
+
+* `node_name` - name of the collector to be checked
+* `email` - email to use againt the API
+* `pass` - password for the email above
+
 Changes
 =======
 
