@@ -4,6 +4,15 @@ require 'json'
 class Sumologic
   class ApiError < RuntimeError; end
 
+  def self.collector_exists?(node_name, email, pass)
+    collector = Sumologic::Collector.new(
+      name: node_name,
+      api_username: email,
+      api_password: pass
+    )
+    collector.exist?
+  end
+
   class Collector
     attr_reader :name, :api_username, :api_password
 
@@ -23,6 +32,10 @@ class Sumologic
 
     def metadata
       collectors['collectors'].find { |c|c['name'] == name }
+    end
+
+    def exist?
+      !!metadata
     end
 
     def api_request(options = {})
