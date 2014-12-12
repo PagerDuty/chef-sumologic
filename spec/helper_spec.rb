@@ -4,7 +4,6 @@ require 'helper'
 require 'webmock/rspec'
 
 describe Sumologic do
-
   let(:test) do
     Sumologic.collector_exists?('pd', 'u', 'p')
   end
@@ -21,11 +20,9 @@ describe Sumologic do
     stub_request(:get, auth_url + '/collectors').to_return(body: JSON.dump(collector_data))
     expect(test).to eq(true)
   end
-
 end
 
 describe Sumologic::Collector do
-
   let(:collector) do
     Sumologic::Collector.new({ name: 'pd', api_username: 'u', api_password: 'p' })
   end

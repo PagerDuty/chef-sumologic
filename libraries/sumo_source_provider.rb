@@ -48,8 +48,6 @@ class Chef
               end
               @new_resource.updated_by_last_action(true)
               Chef::Log.info("#{@new_resource} replaced sumo_source entry")
-            else
-              # resource is present and its same as specified
             end
           else
             converge_by("add #{new_resource.name} via sumologic api\n" + new_resource.to_sumo_hash.to_s)  do

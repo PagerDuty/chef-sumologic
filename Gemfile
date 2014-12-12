@@ -4,6 +4,7 @@ gem 'rake'
 
 group :development do
   gem 'chefspec'
+  gem 'chef', '< 12.0.0'
   gem 'foodcritic'
   gem 'fuubar'
   gem 'pry'
