@@ -51,14 +51,14 @@ See `attributes/default.rb` for default values.
   for more info:
     https://service.sumologic.com/ui/help/Unattended_Installation.htm
 * `node[:sumologic][:admin][:pass]` - The password for the admin's email above.
-* `node[:sumologic][:sources][:default_category]` - You can specify a category
+* `node[:sumologic][:log_sources][:default_category]` - You can specify a category
   for any of your resources through the sumo\_source definition (see below), but
   this allows you to provide a catch-all that's more descriptive than 'log'.
-* `node[:sumologic][:sources][:default_timezone]` - If you have timezone parsing
+* `node[:sumologic][:log_sources][:default_timezone]` - If you have timezone parsing
   disabled or if there are no timezones in your log timestamps, input the
   timezone you want to default to (must match Sumo's dropdown list *exactly*).
   Otherwise will default to UTC.
-* `node[:sumologic][:sources][:force_timezone]` - Set to *true* to force any
+* `node[:sumologic][:log_sources][:force_timezone]` - Set to *true* to force any
   timestamps parsed out of log files to this timezone, regardless of any
   timezone information they may carry.
 
