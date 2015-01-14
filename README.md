@@ -123,7 +123,7 @@ License and Author
 * Author:: Ranjib Dey (<ranjib@pagerduty.com>)
 * Author:: Luke Kosewski (<luke@pagerduty.com>)
 
-Copyright:  2014, PagerDuty, Inc.
+Copyright:  2015, PagerDuty, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
