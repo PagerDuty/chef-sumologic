@@ -13,6 +13,12 @@ task :spec do
   Rake::Task['spec'].invoke
 end
 
+desc 'Run all test kitchen combinations on the codebase'
+task :kitchen do
+  Rake::Task['berkshelf'].invoke
+  Rake::Task['kitchen:all'].invoke
+end
+
 desc 'Run foodcritic on all cookbooks'
 FoodCritic::Rake::LintTask.new do |t|
   t.options = {
@@ -33,6 +39,19 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = "--profile"
   t.pattern = %w{ spec/*.rb }
   t.fail_on_error = true
+end
+
+desc 'Install berkshelf cookbooks locally'
+task :berkshelf do |t, args|
+  system('bundle exec berks install')
+  system('bundle exec berks vendor cookbooks')
+end
+
+begin
+  require 'kitchen/rake_tasks'
+  Kitchen::RakeTasks.new
+rescue LoadError
+  puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
 end
 
 task default: [:foodcritic, :rubocop, :spec]

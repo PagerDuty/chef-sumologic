@@ -22,10 +22,10 @@ I suggest hosting it on a local asset server.
 Platform
 --------
 
-* Tested on Ubuntu 10.04, both x86 and x86-64.
-* Tested on Ubuntu 14.04, x86-64.
+* Tested on Ubuntu 10.04, 12.04, 14.04
+* Tested on CentOS 5.11, 6.6, 7.0
 * Will need extra work to run in Windows, Solaris.
-* Tested under Chef 0.10.8, Chef 10.12.0, and Chef 10.14.\*, in Ruby 1.9 and 2.1.3.
+* Tested under Chef 11.0.0 and 11.16.4 in Ruby 1.9 and 2.1.3.
 
 Attributes
 ==========
