@@ -66,7 +66,9 @@ class Chef
         else
           if @@collector.source_exist?(@new_resource.name)
             converge_by "removing sumo source #{@new_resource.name}" do
-              raise ArgumentError, 'Not implemented yet'
+              source_id = @@collector.source(new_resource.name)['id']
+              @@collector.delete_source!(source_id)
+              @@collector.refresh!
             end
             @new_resource.updated_by_last_action(true)
             Chef::Log.info("#{@new_resource} deleted sumo_source entry")
