@@ -1,8 +1,6 @@
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'foodcritic'
-require 'berkshelf'
-require 'berkshelf/berksfile'
 
 desc 'Run all linters on the codebase'
 task :linters do
@@ -45,6 +43,8 @@ end
 
 desc 'Install berkshelf cookbooks locally'
 task :berkshelf do |t, args|
+  require 'berkshelf'
+  require 'berkshelf/berksfile'
   current_dir = File.expand_path('../', __FILE__)
   berksfile_path = File.join(current_dir, 'Berksfile')
   cookbooks_path = File.join(current_dir, 'cookbooks')
