@@ -21,7 +21,7 @@ platforms:
     ).each do |chef_version| %>
 - name: <%= platform_version %>-<%= chef_version %>
   driver:
-    box: opscode-<%= platform_version %>_chef
+    box: opscode-<%= platform_version %>
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_<%= platform_version %>_chef-provisionerless.box
   provisioner:
     require_chef_omnibus: <%= chef_version %>
