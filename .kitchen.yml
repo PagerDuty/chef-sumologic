@@ -1,0 +1,36 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+# Loop through two lists and output a total matrix of all possible platform + chef versions
+<% %w(
+      ubuntu-14.04
+      ubuntu-12.04
+      ubuntu-10.04
+      centos-7.0
+      centos-6.6
+      centos-5.11
+    ).each do |platform_version| %>
+<% %w(
+      11.16.4
+      11.0.0
+    ).each do |chef_version| %>
+- name: <%= platform_version %>-<%= chef_version %>
+  driver:
+    box: opscode-<%= platform_version %>
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_<%= platform_version %>_chef-provisionerless.box
+  provisioner:
+    require_chef_omnibus: <%= chef_version %>
+<% end %>
+<% end %>
+
+suites:
+- name: default
+  run_list:
+    - recipe[sumologic::default]
+  attributes:
+  data_bags_path: 'test/integration/data_bags'

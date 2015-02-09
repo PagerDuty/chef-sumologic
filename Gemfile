@@ -13,3 +13,8 @@ group :development do
   gem 'webmock'
 end
 
+group :integration do
+  gem 'test-kitchen'
+  gem 'kitchen-vagrant'
+  gem 'berkshelf',  '~> 3.2.1'
+end

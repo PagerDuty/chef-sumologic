@@ -13,6 +13,10 @@ Gemfile*.lock
 # .vagrant
 
 *.un~
-*.json
 vendor
 *.lock
+
+# Test kitchen
+.kitchen/
+.kitchen.local.yml
+cookbooks/
