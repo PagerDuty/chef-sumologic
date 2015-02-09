@@ -31,7 +31,7 @@ class Sumologic
     end
 
     def metadata
-      collectors['collectors'].find { |c|c['name'] == name }
+      collectors['collectors'].find { |c| c['name'] == name }
     end
 
     def exist?
