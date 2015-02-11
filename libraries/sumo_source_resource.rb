@@ -50,7 +50,7 @@ class Chef
 
       def node_source_attributes(run_context)
         if run_context && run_context.node
-          run_context.node[:sumologic][:sources]
+          run_context.node[:sumologic][:log_sources]
         else
           {}
         end

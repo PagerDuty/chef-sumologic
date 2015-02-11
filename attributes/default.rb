@@ -22,5 +22,5 @@
 # default sumocollector attributes
 # Set to true to disable the collector on this node
 default['sumologic']['disabled'] = false
-default['sumologic']['sources']['default_category'] = 'log'
+default['sumologic']['log_sources']['default_category'] = 'log'
 default['sumologic']['api_timeout'] = 60
