@@ -21,7 +21,7 @@ class Sumologic
       @name = opts[:name]
       @api_username = opts[:api_username]
       @api_password = opts[:api_password]
-      @api_timeout = opts.fetch(:api_timeout, nil)
+      @api_timeout = opts[:api_timeout] || 60
     end
 
     def api_endpoint

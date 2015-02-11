@@ -38,7 +38,7 @@ See `attributes/default.rb` for default values.
 * `node[:sumologic][:disabled]` - Set this if you need to disable the collector
   on this node for some reason.
 * `node['sumologic']['api_timeout']` - Set a timeout for calls to the Sumologic API.
-  Default is nil (for backwards compatability)
+  Default is 60 seconds
 * `node[:sumologic][:collector][:version]` - The version of the collector you
   want to install.
 * `node[:sumologic][:collector][:tarball]` - The name of the tarball you're

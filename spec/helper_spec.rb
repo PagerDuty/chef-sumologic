@@ -68,7 +68,7 @@ describe Sumologic::Collector do
       .with(body: "{\"source\":{\"foo\":\"bar\"}}")
       .to_return(status: 200, body: '{}', headers: {})
 
-    collector.add_source!({ foo: :bar })
+    collector.add_source!(foo: :bar)
   end
 
   it '#update_source!' do
