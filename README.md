@@ -37,6 +37,8 @@ See `attributes/default.rb` for default values.
   'sumocollector'.
 * `node[:sumologic][:disabled]` - Set this if you need to disable the collector
   on this node for some reason.
+* `node['sumologic']['api_timeout']` - Set a timeout for calls to the Sumologic API.
+  Default is 60 seconds
 * `node[:sumologic][:collector][:version]` - The version of the collector you
   want to install.
 * `node[:sumologic][:collector][:tarball]` - The name of the tarball you're
@@ -121,7 +123,7 @@ License and Author
 * Author:: Ranjib Dey (<ranjib@pagerduty.com>)
 * Author:: Luke Kosewski (<luke@pagerduty.com>)
 
-Copyright:  2014, PagerDuty, Inc.
+Copyright:  2015, PagerDuty, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
