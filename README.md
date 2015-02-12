@@ -37,6 +37,9 @@ See `attributes/default.rb` for default values.
   'sumocollector'.
 * `node[:sumologic][:disabled]` - Set this if you need to disable the collector
   on this node for some reason.
+* `node[:sumologic][:custom_install]` - Set this if you want to disable the default
+  collector install on this node for some reason.  This can be used if you need to
+  install the collector in a custom manner.  Default is false.
 * `node['sumologic']['api_timeout']` - Set a timeout for calls to the Sumologic API.
   Default is 60 seconds
 * `node[:sumologic][:collector][:version]` - The version of the collector you
