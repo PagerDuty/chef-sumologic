@@ -24,3 +24,4 @@
 default['sumologic']['disabled'] = false
 default['sumologic']['log_sources']['default_category'] = 'log'
 default['sumologic']['api_timeout'] = 60
+default['sumologic']['custom_install'] = false
