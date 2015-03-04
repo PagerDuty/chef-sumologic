@@ -37,29 +37,28 @@ class Chef
         set_or_return(:default_timezone, arg, kind_of: String)
       end
 
-
-      def force_timezone(arg=nil)
-        set_or_return(:force_timezone, arg, :kind_of => [TrueClass, FalseClass])
+      def force_timezone(arg = nil)
+        set_or_return(:force_timezone, arg, kind_of: [TrueClass, FalseClass])
       end
 
-      def automatic_date_parsing(arg=nil)
-        set_or_return(:automatic_date_parsing, arg, :kind_of => [TrueClass, FalseClass])
+      def automatic_date_parsing(arg = nil)
+        set_or_return(:automatic_date_parsing, arg, kind_of: [TrueClass, FalseClass])
       end
 
-      def multiline_processing_enabled(arg=nil)
-        set_or_return(:multiline_processing_enabled, arg, :kind_of => [TrueClass, FalseClass])
+      def multiline_processing_enabled(arg = nil)
+        set_or_return(:multiline_processing_enabled, arg, kind_of: [TrueClass, FalseClass])
       end
 
-      def use_autoline_matching(arg=nil)
-        set_or_return(:use_autoline_matching, arg, :kind_of => [TrueClass, FalseClass])
+      def use_autoline_matching(arg = nil)
+        set_or_return(:use_autoline_matching, arg, kind_of: [TrueClass, FalseClass])
       end
 
-      def manual_prefix_regexp(arg=nil)
-        set_or_return(:manual_prefix_regexp, arg, :kind_of => String)
+      def manual_prefix_regexp(arg = nil)
+        set_or_return(:manual_prefix_regexp, arg, kind_of: String)
       end
 
-      def default_date_format(arg=nil)
-        set_or_return(:default_date_format, arg, :kind_of => String)
+      def default_date_format(arg = nil)
+        set_or_return(:default_date_format, arg, kind_of: String)
       end
 
       def to_sumo_hash
