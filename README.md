@@ -1,5 +1,4 @@
-Description
-===========
+# Description
 
 Installs the Sumo Logic collector the way we do it at PagerDuty.  Allows you to
 configure the sources to send up; works on Linux x86 and x86-64.  Sets up a
@@ -8,8 +7,7 @@ manually activating or pushing any buttons.
 
 [![Build Status](https://travis-ci.org/PagerDuty/chef-sumologic.svg)](https://travis-ci.org/PagerDuty/chef-sumologic)
 
-Requirements
-============
+# Requirements
 
 Depends on the Opscode `java` cookbook which ensures you have a /usr/bin/java.
 Really that's all you need, so feel free to break that dependency if you
@@ -19,16 +17,14 @@ The cookbook grabs a Sumo Logic tarball from an http server.  Sumo Logic
 provides you download links if you want to use those, but they're ephemeral, so
 I suggest hosting it on a local asset server.
 
-Platform
---------
+## Platform
 
 * Tested on Ubuntu 10.04, 12.04, 14.04
 * Tested on CentOS 5.11, 6.6, 7.0
 * Will need extra work to run in Windows, Solaris.
 * Tested under Chef 11.0.0 and 11.16.4 in Ruby 1.9 and 2.1.3.
 
-Attributes
-==========
+# Attributes
 
 See `attributes/default.rb` for default values.
 
@@ -49,11 +45,11 @@ See `attributes/default.rb` for default values.
 * `node[:sumologic][:collector][:checksum]` - The md5sum of the tarball.
 * `node[:sumologic][:collector][:url]` - The full URL you're downloading the
   collector from.
-* `node[:sumologic][:admin][:email]` - The email of an admin user that will
+* `node[:sumologic][:email]` - The email of an admin user that will
   be invoked to perform unattended installs of collectors.  See Sumo's article
   for more info:
     https://service.sumologic.com/ui/help/Unattended_Installation.htm
-* `node[:sumologic][:admin][:pass]` - The password for the admin's email above.
+* `node[:sumologic][:password]` - The password for the admin's email above.
 * `node[:sumologic][:log_sources][:default_category]` - You can specify a category
   for any of your resources through the sumo\_source definition (see below), but
   this allows you to provide a catch-all that's more descriptive than 'log'.
@@ -64,9 +60,25 @@ See `attributes/default.rb` for default values.
 * `node[:sumologic][:log_sources][:force_timezone]` - Set to *true* to force any
   timestamps parsed out of log files to this timezone, regardless of any
   timezone information they may carry.
+* `node[:sumologic][:credentials][:bag_name]` - Name of the data bag
+* `node[:sumologic][:credentials][:item_name]` - Name of the item within the data bag
+* `node[:sumologic][:credentials][:secret_file]` - Path to the local file containing the encryption secret key.  Needed if the data bag is encrypted.  Typically is located at `/etc/chef/encrypted_data_bag_secret`.
 
-Usage
-=====
+NOTE: Having `node[:sumologic][:credentials]` set will take precidence over `node[:sumologic][:email]` and `node[:sumologic][:password]`
+
+# Data bag
+
+If you set `node[:sumologic][:credentials]`, you must have a data bag setup in the following form:
+
+```
+{
+ "id": "api-creds",
+ "accessID": "example@example.com",
+ "accessKey": "password123"
+}
+```
+
+# Usage
 
 Drop this cookbook with the default recipe onto your servers and you've got
 a collector running.  Want some sources?  Use the sumo\_source definition
@@ -84,11 +96,9 @@ configure all of your sources before restarting sumologic.  It will also
 correctly set the '-o' sumocollector parameter for a sumo restart to force the
 web interface to accept changes to your sources.
 
-Helper Functions
-==============
+# Helper Functions
 
-Sumologic.collector_exists?(node_name, email, pass)
----------------------------------------------------
+## Sumologic.collector_exists?(node_name, email, pass)
 
 This checks whether or not a collector with the given name exists.
 
@@ -96,8 +106,7 @@ This checks whether or not a collector with the given name exists.
 * `email` - email to use againt the API
 * `pass` - password for the email above
 
-Changes
-=======
+# Changes
 
 ## v0.0.2
 
@@ -119,8 +128,7 @@ Changes
 * Stop forcing a particular URL to work; users can now use whatever URL they
   please to store their Sumo tarballs.
 
-License and Author
-==================
+# License and Author
 
 * Author:: Grant Ridder (<grant@pagerduty.com>)
 * Author:: Ranjib Dey (<ranjib@pagerduty.com>)
