@@ -8,7 +8,7 @@ group :development do
   gem 'foodcritic'
   gem 'fuubar'
   gem 'pry'
-  gem 'rubocop', '~> 0.18'
+  gem 'rubocop', '~> 0.29'
   gem 'travis', '~> 1.6.10'
   gem 'webmock'
 end
