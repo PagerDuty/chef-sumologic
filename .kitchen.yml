@@ -16,6 +16,7 @@ platforms:
       centos-5.11
     ).each do |platform_version| %>
 <% %w(
+      12.1
       11.16.4
       11.0.0
     ).each do |chef_version| %>

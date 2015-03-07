@@ -25,7 +25,7 @@ Platform
 * Tested on Ubuntu 10.04, 12.04, 14.04
 * Tested on CentOS 5.11, 6.6, 7.0
 * Will need extra work to run in Windows, Solaris.
-* Tested under Chef 11.0.0 and 11.16.4 in Ruby 1.9 and 2.1.3.
+* Tested under Chef 11.0.0, 11.16.4, and 12.1 under Ruby 2.1.5 and 2.2.0.
 
 Attributes
 ==========
