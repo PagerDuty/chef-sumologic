@@ -122,12 +122,13 @@ class Chef
       def load_creds
         if node['sumologic']['credentials']
           creds = node['sumologic']['credentials']
+          credentials = {}
 
           if creds[:secret_file]
             secret = Chef::EncryptedDataBagItem.load_secret(creds[:secret_file])
             bag = Chef::EncryptedDataBagItem.load(creds[:bag_name], creds[:item_name], secret)
           else
-            bag = data_bag_item(creds[:bag_name], creds[:item_name])
+            bag = Chef::DataBagItem.load(creds[:bag_name], creds[:item_name])
           end
 
           [:accessID, :accessKey, :email, :password].each do |item|
