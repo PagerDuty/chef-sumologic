@@ -15,10 +15,21 @@ class Chef
 
       def load_current_resource
         return if node['sumologic']['disabled']
+
+        creds = load_creds
+
+        if creds['accessID'] && creds['accessKey']
+          api_username = creds['accessID']
+          api_password = creds['accessKey']
+        elsif creds['email'] && creds['password']
+          api_username = creds['email']
+          api_password = creds['password']
+        end
+
         @@collector ||= Sumologic::Collector.new(
           name: node.name,
-          api_username: node['sumologic']['userID'],
-          api_password: node['sumologic']['password'],
+          api_username: api_username,
+          api_password: api_password,
           api_timeout: node['sumologic']['api_timeout']
         )
 
@@ -105,6 +116,38 @@ class Chef
           end
         end
         description
+      end
+
+      # logic modified from https://github.com/SumoLogic/sumologic-collector-chef-cookbook/blob/master/recipes/sumoconf.rb#L34
+      def load_creds
+        if node['sumologic']['credentials']
+          creds = node['sumologic']['credentials']
+          credentials = {}
+
+          if creds[:secret_file]
+            secret = Chef::EncryptedDataBagItem.load_secret(creds[:secret_file])
+            bag = Chef::EncryptedDataBagItem.load(creds[:bag_name], creds[:item_name], secret)
+          else
+            bag = Chef::DataBagItem.load(creds[:bag_name], creds[:item_name])
+          end
+
+          [:accessID, :accessKey, :email, :password].each do |item|
+            credentials[item] = bag[item]
+          end
+
+        else
+          if node['sumologic']['userID']
+            credentials['email'] = node['sumologic']['userID']
+          elsif node['sumologic']['email']
+            credentials['email'] = node['sumologic']['email']
+          end
+
+          %w(accessID accessKey password).each do |item|
+            credentials[item] = node['sumologic'][item]
+          end
+        end
+
+        credentials
       end
     end
   end

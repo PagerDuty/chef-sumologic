@@ -1,0 +1,15 @@
+{
+  "id": "api-creds-encrypt",
+  "accessID": {
+    "encrypted_data": "6WL6jKw9BDl3RjDEjSfU9k6zHr6VCJuWjJU7Tc7s0qFClIklp1ldXBFro9sA\njmtx\n",
+    "iv": "wgYo/+EgWY+M/34cxwlmQA==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "accessKey": {
+    "encrypted_data": "a7MB3m5rzOLhHuJKpZJ+l8eXJk12dJILbiWnbXs/rEg=\n",
+    "iv": "af+kj8cu7aajQmoKi2l89Q==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  }
+}

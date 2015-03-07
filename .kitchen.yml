@@ -34,4 +34,28 @@ suites:
   run_list:
     - recipe[sumologic::default]
   attributes:
+    sumologic:
+      email: example@example.com
+      password: password123
+- name: databag
+  run_list:
+    - recipe[sumologic::default]
+  attributes:
+    sumologic:
+      use_encrypted_data_bag: true
+      credentials:
+        bag_name: sumo-creds
+        item_name: api-creds
+  data_bags_path: test/integration/data_bags
+- name: databag_encrypted
+  run_list:
+    - recipe[sumologic::default]
+  attributes:
+    sumologic:
+      use_encrypted_data_bag: true
+      credentials:
+        bag_name: sumo-creds
+        item_name: api-creds-encrypt
+        secret_file: '/tmp/kitchen/encrypted_data_bag_secret'
   data_bags_path: 'test/integration/data_bags'
+  encrypted_data_bag_secret_key_path: 'test/integration/default/encrypted_data_bag_secret'
