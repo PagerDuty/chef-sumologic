@@ -78,6 +78,13 @@ class Chef
         }
       end
 
+      def to_json
+        {
+          "api.version" => "v1",
+          source: to_sumo_hash
+        }.to_json
+      end
+
       def node_source_attributes(run_context)
         if run_context && run_context.node
           run_context.node[:sumologic][:log_sources]

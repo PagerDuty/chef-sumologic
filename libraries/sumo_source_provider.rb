@@ -51,22 +51,40 @@ class Chef
         if node['sumologic']['disabled']
           Chef::Log.debug('Skipping sumo source declaration as sumologic::disabled is set to true')
         else
-          if @@collector.source_exist?(new_resource.name)
-            if sumo_source_different?
-              converge_by("replace #{new_resource.name} via api\n" + convergence_description) do
-                @@collector.update_source!(@@collector.source(new_resource.name)['id'], new_resource.to_sumo_hash, node['sumologic']['api_timeout'])
+          if node['sumologic']['local_management']
+            directory node['sumologic']['sumo_json_path'] do
+              owner 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+
+            file ::File.join(node['sumologic']['sumo_json_path'], "#{new_resource.name}.json") do
+              action :create
+              content new_resource.to_json
+              owner 'root'
+              group 'root'
+              mode '0644'
+            end
+          else
+            if @@collector.source_exist?(new_resource.name)
+              if sumo_source_different?
+                converge_by("replace #{new_resource.name} via api\n" + convergence_description) do
+                  @@collector.update_source!(@@collector.source(new_resource.name)['id'], new_resource.to_sumo_hash, node['sumologic']['api_timeout'])
+                  @@collector.refresh!
+                end
+                @new_resource.updated_by_last_action(true)
+                Chef::Log.info("#{@new_resource} replaced sumo_source entry")
+              end
+            else
+              converge_by("add #{new_resource.name} via sumologic api\n" + new_resource.to_sumo_hash.to_s)  do
+                @@collector.add_source!(new_resource.to_sumo_hash, node['sumologic']['api_timeout'])
                 @@collector.refresh!
               end
               @new_resource.updated_by_last_action(true)
-              Chef::Log.info("#{@new_resource} replaced sumo_source entry")
+              Chef::Log.info("#{@new_resource} added sumo_source entry")
             end
-          else
-            converge_by("add #{new_resource.name} via sumologic api\n" + new_resource.to_sumo_hash.to_s)  do
-              @@collector.add_source!(new_resource.to_sumo_hash, node['sumologic']['api_timeout'])
-              @@collector.refresh!
-            end
-            @new_resource.updated_by_last_action(true)
-            Chef::Log.info("#{@new_resource} added sumo_source entry")
           end
         end
       end
@@ -75,14 +93,20 @@ class Chef
         if node['sumologic']['disabled']
           Chef::Log.debug('Skipping sumo source declaration as sumologic::disabled is set to true')
         else
-          if @@collector.source_exist?(@new_resource.name)
-            converge_by "removing sumo source #{@new_resource.name}" do
-              source_id = @@collector.source(new_resource.name)['id']
-              @@collector.delete_source!(source_id)
-              @@collector.refresh!
+          if node['sumologic']['local_management']
+            file ::File.join(node['sumologic']['sumo_json_path'], "#{new_resource.name}.json") do
+              action :delete
             end
-            @new_resource.updated_by_last_action(true)
-            Chef::Log.info("#{@new_resource} deleted sumo_source entry")
+          else
+            if @@collector.source_exist?(@new_resource.name)
+              converge_by "removing sumo source #{@new_resource.name}" do
+                source_id = @@collector.source(new_resource.name)['id']
+                @@collector.delete_source!(source_id)
+                @@collector.refresh!
+              end
+              @new_resource.updated_by_last_action(true)
+              Chef::Log.info("#{@new_resource} deleted sumo_source entry")
+            end
           end
         end
       end
