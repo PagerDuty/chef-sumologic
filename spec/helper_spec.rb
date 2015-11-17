@@ -40,7 +40,7 @@ describe Sumologic::Collector do
   end
 
   let(:source_data) do
-    { sources: [{ name: :pd, name: :doit }] }
+    { sources: [{ name: :doit, id: 1 }] }
   end
 
   let(:timeout_secs) do

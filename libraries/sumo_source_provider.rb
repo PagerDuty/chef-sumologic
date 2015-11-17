@@ -61,7 +61,7 @@ class Chef
               Chef::Log.info("#{@new_resource} replaced sumo_source entry")
             end
           else
-            converge_by("add #{new_resource.name} via sumologic api\n" + new_resource.to_sumo_hash.to_s)  do
+            converge_by("add #{new_resource.name} via sumologic api\n" + new_resource.to_sumo_hash.to_s) do
               @@collector.add_source!(new_resource.to_sumo_hash)
               @@collector.refresh!
             end
